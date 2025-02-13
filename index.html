@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF App</title>
+    <link rel="stylesheet" href="css/buttons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9e3f1;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+        p {
+            margin-block-start: 0.5em;
+            margin-block-end: 0.5em;
+        }
+        .large-text {
+            font-size: 24px; /* Adjust size as needed */
+            font-weight: bold; /* Makes the text bold */
+            letter-spacing: 2px; /* Increases the space between letters for a wider appearance */
+            word-spacing: 5px; /* Optional: Adds more space between words */
+            margin-bottom: 1px;
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            width: 100%;
+        }
+        .gif {
+            max-width: 100%;
+            height: auto;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #slide0 { display: block; }
+        #slide1, #slide2, #slide3, #slide4, #slide5, #slide6 { display: none; }
+
+        .cylinder-container {
+            position: relative;
+            width: 50%; /* Increased the width */
+            height: 40vh;
+            margin: 0 auto;
+            overflow: hidden;
+            perspective: 800px;
+        }
+
+        .cylinder {
+            position: absolute;
+            width: 100%; /* Keep it to 100% of the container's width */
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 1s;
+        }
+
+
+        /*.sentence {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+            line-height: 40px;
+            font-weight: bold;
+            transform-origin: center center;
+            background-color: rgba(0, 128, 128, 0.6);
+            border-radius: 30px;
+        }*/
+
+        .sentence {
+            position: absolute;
+            width: 90%; /* Reduced width for better readability */
+            text-align: center;
+            font-size: 16px; /* Increased font size */
+            color: white; /* Ensuring good contrast */
+            line-height: 1.5; /* Improved spacing */
+            font-weight: bold;
+            transform-origin: center center;
+            background-color: rgba(0, 128, 128, 0.8); /* Darker shade for better contrast */
+            border-radius: 20px;
+            padding: 15px; /* Added padding for better spacing */
+            box-shadow: 11px -15px 8px rgb(0 0 0 / 31%); /* Soft shadow for depth */
+/*            -14px -18px 8px rgba(0, 0, 0, 0.2)*/
+/*             11px -15px 8px rgb(0 0 0 / 31%)*/
+/*              0px 4px 8px rgba(0, 0, 0, 0.2)*/
+        }
+
+        /* Random colors for sentences */
+        .sentence:nth-child(1) { 
+            background-color: rgba(0, 128, 128, 0.6); 
+            transform: rotateX(0deg) translateZ(140px); 
+        }
+        .sentence:nth-child(2) { 
+            background-color: rgba(255, 69, 0, 0.6); 
+            transform: rotateX(24deg) translateZ(140px); 
+        }
+        .sentence:nth-child(3) { 
+            background-color: rgba(255, 215, 0, 0.6); 
+            transform: rotateX(48deg) translateZ(140px); 
+        }
+        .sentence:nth-child(4) { 
+            background-color: rgba(0, 255, 0, 0.6); 
+            transform: rotateX(72deg) translateZ(140px); 
+        }
+        .sentence:nth-child(5) { 
+            background-color: rgba(0, 0, 255, 0.6); 
+            transform: rotateX(96deg) translateZ(140px); 
+        }
+        .sentence:nth-child(6) { 
+            background-color: rgba(255, 20, 147, 0.6); 
+            transform: rotateX(120deg) translateZ(140px); 
+        }
+        .sentence:nth-child(7) { 
+            background-color: rgba(255, 105, 180, 0.6); 
+            transform: rotateX(144deg) translateZ(140px); 
+        }
+        .sentence:nth-child(8) { 
+            background-color: rgba(127, 255, 0, 0.6); 
+            transform: rotateX(168deg) translateZ(140px); 
+        }
+        .sentence:nth-child(9) { 
+            background-color: rgba(255, 99, 71, 0.6); 
+            transform: rotateX(192deg) translateZ(140px); 
+        }
+        .sentence:nth-child(10) { 
+            background-color: rgba(106, 90, 205, 0.6); 
+            transform: rotateX(216deg) translateZ(140px); 
+        }
+        .sentence:nth-child(11) { 
+            background-color: rgba(255, 99, 132, 0.6); 
+            transform: rotateX(240deg) translateZ(140px); 
+        }
+        .sentence:nth-child(12) { 
+            background-color: rgba(54, 162, 235, 0.6); 
+            transform: rotateX(264deg) translateZ(140px); 
+        }
+        .sentence:nth-child(13) { 
+            background-color: rgba(255, 159, 64, 0.6); 
+            transform: rotateX(288deg) translateZ(140px); 
+        }
+        .sentence:nth-child(14) { 
+            background-color: rgba(75, 192, 192, 0.6); 
+            transform: rotateX(312deg) translateZ(140px); 
+        }
+        .sentence:nth-child(15) { 
+            background-color: rgba(153, 102, 255, 0.6); 
+            transform: rotateX(336deg) translateZ(140px); 
+        }
+
+
+        .arrows {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrow-btn {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: rgba(255, 69, 0, 0.8);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container" id="slide0">
+        <h2>Enter your name</h2>
+        <input type="text" id="username" placeholder="Your Name">
+        <div class="buttons">
+            <button class="button-28" id="login">Login</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide1">
+        <img src="resources/poke.gif" alt="GIF 1" class="gif">
+        <p class="text large-text">Happy Valentine's Day!! 🤗</p>
+        <p class="text">Will you be my Valentine? ❣️🤌🌹 </p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide2">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide2">
+        <img src="resources/goma.gif" alt="GIF 2" class="gif">
+        <p class="text large-text">Acche se soch lo 🤔</p>
+        <p class="text">Will you be my Valentine? 😭</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide3">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide3">
+        <img src="resources/angry.gif" alt="GIF 3" class="gif">
+        <p class="text large-text">Ek baar aur soch lo 😏</p>
+        <p class="text">Will you be my Valentine? 🥲</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide4">No</button>
+        </div>
+    </div>
+
+        <div class="container" id="slide4">
+            <img src="resources/panda.gif" alt="GIF 4" class="gif">
+            <p class="text large-text">Maan bhi jaao ab!! Kitna Bhav khaogi</p>
+            <p class="text">Say yes!! Will you be my Valentine?🥺</p>
+            <div class="buttons">
+                <button class="button-28 yes" id="toSlide5">Yes</button>
+                <button class="button-28 no" id="movingNo">No</button>
+            </div>
+        </div>
+
+    <div class="container" id="slide5">
+        <div class="cylinder-container">
+            <div class="cylinder">
+                <div class="sentence">You are all that I want this Life 😊</div>
+                <div class="sentence">You are my sunshine ☀️</div>
+                <div class="sentence">I thank god everyday, that he made us meet each other</div>
+                <div class="sentence">I will always try my best to make you happy</div>
+                <div class="sentence">Love found me in the most beautiful way—through you ❤️</div>
+                <div class="sentence">My future Wife 😍</div>
+                <div class="sentence">My soulmate❣️</div>
+                <div class="sentence">Destiny led me straight to you and I’m forever grateful 😇</div>
+                <div class="sentence">Tera Mujhse hai pehle ka naata koi...💞</div>
+                <div class="sentence">My phoolmati 😛</div>
+                <div class="sentence">I 🫶 Yoooo</div>
+                <div class="sentence">Can I keep you with me for the rest of my life 🙃</div>
+                <div class="sentence">You can move the world with your kindness</div>
+                <div class="sentence">You are my acche karmo ka fal 😍</div>
+                <div class="sentence">You are my most precious gift from God 🥰</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="arrows">
+        <button class="arrow-btn" id="arrowBtn">&#8593;</button>
+    </div>
+
+    <div class="container" id="slide6">
+        <img src="resources/gif3.gif" alt="GIF 6" class="gif">
+        <p class="text">Your configurable sentence for Slide 6</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".arrows").hide()
+
+            $("#login").click(function() {
+                var username = $("#username").val().trim();
+                if (username.toLowerCase() === "vanshika") { // Check if the username is "anikit"
+                    $("#slide0").hide();
+                    $("#slide1").show();
+                } else {
+                    alert("Access denied"); // Show a message if the name doesn't match
+                }
+                // $("#slide0").hide();
+                // $("#slide1").show();
+            });
+
+            $("#toSlide2").click(function() {
+                $("#slide1").hide();
+                $("#slide2").show();
+            });
+
+            $("#toSlide3").click(function() {
+                $("#slide2").hide();
+                $("#slide3").show();
+            });
+
+            $("#toSlide4").click(function() {
+                $("#slide3").hide();
+                $("#slide4").show();
+            });
+
+            $("#toSlide5").click(function() {
+                $("#slide4").hide();
+                $("#slide5").show();
+                $(".arrows").show()
+            });
+
+            $("#movingNo").mouseenter(function() {
+                let maxX = 40; 
+                let maxY = 30;
+                let windowWidth = window.innerWidth;
+                let windowHeight = window.innerHeight;
+
+                let randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+                let randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+                $(this).css({
+                    transform: `translate(${(randomX / 100) * windowWidth}px, ${(randomY / 100) * windowHeight}px)`
+                });
+            });
+
+            $("#movingNo").click(function() {
+                let maxX = 40; 
+                let maxY = 30; 
+                let windowWidth = window.innerWidth;
+                let windowHeight = window.innerHeight;
+
+                let randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+                let randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+                $(this).css({
+                    transform: `translate(${(randomX / 100) * windowWidth}px, ${(randomY / 100) * windowHeight}px)`
+                });
+            });
+
+            $(".yes").click(function() {
+                $(this).closest(".container").hide().next().show();
+            }); 
+
+
+            var angle = 0;
+            $("#arrowBtn").click(function() {
+                angle += 24; // Update the angle increment to 24 degrees
+                updateCylinder();
+            });
+
+            function updateCylinder() {
+                $(".cylinder").css("transform", "rotateX(" + angle + "deg)");
+
+                const sentenceIndex = (angle / 24) % 15; // Update to support 15 sentences
+                const sentenceColors = [
+                    "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 159, 64)", 
+                    "rgb(75, 192, 192)", "rgb(153, 102, 255)", "rgb(255, 159, 64)", 
+                    "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", 
+                    "rgb(153, 102, 255)", "rgb(255, 99, 132)", "rgb(54, 162, 235)",
+                    "rgb(255, 159, 64)", "rgb(75, 192, 192)", "rgb(153, 102, 255)"
+                ];
+
+                $("body").css("background-color", sentenceColors[sentenceIndex]);
+            }
+        });
+    </script>
+</body>
+</html>

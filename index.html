@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF App</title>
+    <link rel="stylesheet" href="css/buttons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9e3f1;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+        p {
+            margin-block-start: 0.5em;
+            margin-block-end: 0.5em;
+        }
+        .large-text {
+            font-size: 24px; /* Adjust size as needed */
+            font-weight: bold; /* Makes the text bold */
+            letter-spacing: 2px; /* Increases the space between letters for a wider appearance */
+            word-spacing: 5px; /* Optional: Adds more space between words */
+            margin-bottom: 1px;
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .gif {
+            max-width: 100%;
+            height: auto;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        #slide0 { 
+            display: block;
+        }
+
+        #slide1, #slide2, #slide3, #slide4, #slide5, #slide6 { display: none; }
+
+        .cyl-container {
+            transform: rotate(90deg);
+        }
+
+        .top-sentence {
+            position: fixed;
+            top: 10%; /* Adjust the top position as needed */
+            left: 35%;
+            transform: translateX(-50%) rotate(-90deg);
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /*.cylinder-container {
+            position: relative;
+            width: 50%; 
+            height: 40vh;
+            margin: 0 auto;
+            perspective: 800px;
+        }
+
+        .cylinder {
+            position: absolute;
+            width: 100%; 
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 1s ease;
+        }*/
+
+        .cylinder-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the cylinder container */
+            width: 70%; /* Ensures it takes the full width */
+            height: 70%; /* Takes full height of the container */
+        }
+
+        .cylinder {
+            position: absolute;
+            width: 100%; /* Full width of the container */
+            height: 100%; /* Full height of the container */
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 1s ease;
+            display: flex;
+            align-items: center; /* Vertically center sentences */
+            justify-content: center; /* Horizontally center sentences */
+        }
+
+        .sentence {
+            position: absolute;
+            width: 80%;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            line-height: 1.8;
+            font-weight: bold;
+            font-family: ui-sans-serif;
+            transform-origin: center center;
+            padding: 10px;
+            box-shadow: 11px -15px 8px rgb(0 0 0 / 31%);
+            transition: background 1s ease, transform 0.5s ease, box-shadow 0.5s ease;
+            border-radius: 25px;
+            background-color: rgba(0, 128, 128, 0.8);
+        }
+
+        /* Random gradients for sentences */
+        .sentence:nth-child(1) {
+            background: linear-gradient(45deg, rgba(0, 128, 128, 0.8), rgba(255, 69, 0, 0.6));
+            transform: rotateY(0deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(2) {
+            background: linear-gradient(45deg, rgba(255, 69, 0, 0.6), rgba(255, 215, 0, 0.6));
+            transform: rotateY(24deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(3) {
+            background-color: rgba(245, 66, 132, 0.6);
+            transform: rotateY(48deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(4) {
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.8), rgba(0, 0, 255, 1));
+            transform: rotateY(72deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(5) {
+            background: linear-gradient(45deg, rgba(0, 0, 255, 0.6), rgba(255, 20, 147, 0.6));
+            transform: rotateY(96deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(6) {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.6), rgba(255, 105, 180, 0.6));
+            transform: rotateY(120deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(7) {
+            background-color: rgba(66, 117, 245, 0.6);
+            transform: rotateY(144deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(8) {
+            background-color: rgba(245, 66, 93, 0.6);
+            transform: rotateY(168deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(9) {
+            background-color: rgba(66, 93, 245, 0.6);
+            transform: rotateY(192deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(10) {
+            background: linear-gradient(45deg, rgba(106, 90, 205, 0.8), rgba(255, 99, 132, 1));
+            transform: rotateY(216deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(11) {
+            background: linear-gradient(45deg, rgba(255, 99, 132, 0.8), rgba(54, 162, 235, 1));
+            transform: rotateY(240deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(12) {
+            background: linear-gradient(45deg, rgba(54, 162, 235, 0.6), rgba(255, 159, 64, 0.6));
+            transform: rotateY(264deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(13) {
+            background: linear-gradient(45deg, rgba(255, 159, 64, 0.8), rgba(75, 192, 192, 0.8));
+            transform: rotateY(288deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(14) {
+            background-color: rgba(54, 162, 235, 0.6); 
+            transform: rotateY(312deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(15) {
+            background: linear-gradient(45deg, rgba(153, 102, 255, 0.6), rgba(0, 128, 128, 0.6));
+            transform: rotateY(336deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+
+
+
+        .arrows {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrow-btn {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: rgba(255, 69, 0, 0.8);
+        }
+
+
+        #slide7 {
+            display: none;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffccdc; /* Light pink background */
+        }
+
+        .love-message {
+            font-size: 50px;
+            font-weight: bold;
+            color: red;
+            margin-top: 20%;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Hearts Animation */
+        .hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: floatUp 4s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="slide0">
+        <h1>Enter your name</h2>
+        <input type="text" id="username" placeholder="Your Name">
+        <div class="buttons">
+            <button class="button-28" id="login">Login</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide1">
+        <img src="resources/poke.gif" alt="GIF 1" class="gif">
+        <p class="text large-text">Happy Valentine's Day!! 🤗</p>
+        <p class="text">Will you be my Valentine? ❣️🤌🌹 </p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide2">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide2">
+        <img src="resources/goma.gif" alt="GIF 2" class="gif">
+        <p class="text large-text">Acche se soch lo 🤔</p>
+        <p class="text">Will you be my Valentine? 😭</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide3">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide3">
+        <img src="resources/angry.gif" alt="GIF 3" class="gif">
+        <p class="text large-text">Ek baar aur soch lo 😏</p>
+        <p class="text">Will you be my Valentine? 🥲</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide4">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="slide4">
+        <img src="resources/peach-goma-phone.gif" alt="GIF 3" class="gif">
+        <p class="text large-text">Phir se soch lo 🙃 </p>
+        <p class="text">Will you be my Valentine? 💌</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide5">No</button>
+        </div>
+    </div>
+
+        <div class="container" id="slide5">
+            <img src="resources/panda.gif" alt="GIF 5" class="gif">
+            <p class="text large-text">Maan bhi jaao ab!! Kitna Bhav khaogi</p>
+            <p class="text">Will you be my Valentine?🥺</p>
+            <p class="text">Say yes!!</p>
+            <div class="buttons">
+                <button class="button-28 yes" id="toslide6">Yes</button>
+                <button class="button-28 no" id="movingNo">No</button>
+            </div>
+        </div>
+
+    <div class="container cyl-container" id="slide6">
+        <div class="cylinder-container">
+            <div class="cylinder">
+                <div class="sentence">You are all that I want this Life 😊</div>
+                <div class="sentence">You are my sunshine ☀️</div>
+                <div class="sentence">I thank god everyday, that he made us meet each other 😇</div>
+                <div class="sentence">I promise to always share my WiFi password, my fries 🍟, and my secrets with you 🙃</div>
+                <div class="sentence">Love found me in the most beautiful way through You 🫵❤️</div>
+                <div class="sentence">My future Wife 😍</div>
+                <div class="sentence">My soulmate❣️</div>
+                <div class="sentence">Destiny led me straight to you and I’m forever grateful 😇</div>
+                <div class="sentence">Tera Mujhse hai pehle ka naata koi...💞</div>
+                <div class="sentence">My phoolmati 😛</div>
+                <div class="sentence">I 🫶 Yoooo</div>
+                <div class="sentence">Can I keep you with me for the rest of my life 🙃</div>
+                <div class="sentence">I promise to fake laugh at your jokes even when they’re terrible 🤓(but secretly, I love them) 😋</div>
+                <div class="sentence">You are my acche karmo ka fal 😍</div>
+                <div class="sentence">You are my most precious gift from God 🥰</div>
+            </div>
+        </div>
+
+        <p class="top-sentence">Love ❤️ 💞</p>
+    </div>
+
+    <div class="arrows">
+        <button class="arrow-btn" id="arrowBtn">&#8593;</button>
+    </div>
+
+    <div class="container" id="slide7">
+        <h1 class="love-message">Happy Valentine's Day Darling ❤️</h1>
+        <div class="hearts-container"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".arrows").hide();
+
+            const sentenceColors = [
+                "rgba(66, 197, 245, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(66, 111, 245, 0.8)",
+                "rgba(66, 66, 245, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(245, 66, 194, 0.8)",
+                "rgba(245, 66, 150, 0.8)",
+                "rgba(245, 66, 120, 0.8)",
+                "rgba(156, 66, 245, 0.8)",
+                "rgba(188, 66, 245, 0.8)",
+                "rgba(245, 93, 66, 0.8)",
+                "rgba(245, 111, 66, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(66, 108, 245, 0.6)", 
+                "rgba(170, 66, 245, 0.8)"
+            ];
+
+            $("#login").click(function() {
+                var username = $("#username").val().trim();
+                if (username.toLowerCase() === "vanshika") { // Check if the username is "vanshika"
+                    $("#slide0").hide();
+                    $("#slide1").show();
+                } else {
+                    alert("Access denied");
+                }
+            });
+
+            $("#toSlide2").click(function() {
+                $("#slide1").hide();
+                $("#slide2").show();
+            });
+
+            $("#toSlide3").click(function() {
+                $("#slide2").hide();
+                $("#slide3").show();
+            });
+
+            $("#toSlide4").click(function() {
+                $("#slide3").hide();
+                $("#slide4").show();
+            });
+
+            $("#toSlide5").click(function() {
+                $("#slide4").hide();
+                $("#slide5").show();
+            });
+
+            $("#toslide6").click(function() {
+                $("#slide5").hide();
+                $("#slide6").show();
+                $(".arrows").show();
+            });
+
+            $("#movingNo").mouseenter(function() {
+                let maxX = 40;
+                let maxY = 30;
+                let windowWidth = window.innerWidth;
+                let windowHeight = window.innerHeight;
+
+                let randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+                let randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+                $(this).css({
+                    transform: `translate(${(randomX / 100) * windowWidth}px, ${(randomY / 100) * windowHeight}px)`
+                });
+            });
+
+            $("#movingNo").click(function() {
+                let maxX = 40;
+                let maxY = 30;
+                let windowWidth = window.innerWidth;
+                let windowHeight = window.innerHeight;
+
+                let randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+                let randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+                $(this).css({
+                    transform: `translate(${(randomX / 100) * windowWidth}px, ${(randomY / 100) * windowHeight}px)`
+                });
+            });
+
+            $(".yes").click(function() {
+                $(this).closest(".container").hide().next().show();
+            });
+
+            var angle = 0;
+            $("#arrowBtn").click(function() {
+                angle -= 30; // Update the angle increment to 30 degrees
+                updateCylinder();
+            });
+
+            function updateCylinder() {
+                $(".cylinder").css("transform", "rotateY(" + angle + "deg)");
+
+                const sentenceIndex = Math.abs(Math.floor((angle / 24) % 15)); // Calculate the current sentence index
+                // Update the background color dynamically based on the current sentence color
+                $("body").css("background-color", sentenceColors[sentenceIndex]);
+            }
+        });
+
+
+        $("#toslide6").click(function() {
+            $("#slide6").hide();
+            $("#slide7").show();
+            createHearts();
+        });
+
+        function createHearts() {
+            const heartsContainer = document.querySelector(".hearts-container");
+            for (let i = 0; i < 50; i++) {
+                let heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 4 + "s"; // Vary speeds
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000); // Remove heart after 10s
+            }
+        }
+
+        $("#slide7").click(function() {
+            createHearts();
+        })
+        
+
+        // $("#slide7").mousemove(function() {
+        //     if ($(this).is(":visible")) {  
+        //         createHearts();
+        //     }
+        // });
+
+
+    </script>
+
+</body>
+</html>

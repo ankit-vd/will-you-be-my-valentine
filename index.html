@@ -34,6 +34,7 @@
             position: absolute;
             width: 100%;
         }
+        
         .gif {
             max-width: 100%;
             height: auto;
@@ -52,120 +53,151 @@
             margin-bottom: 10px;
         }
 
-        #slide0 { display: block; }
+        input:focus {
+            outline: none;
+        }
+
+        #slide0 { 
+            display: block;
+        }
+
         #slide1, #slide2, #slide3, #slide4, #slide5, #slide6 { display: none; }
 
-        .cylinder-container {
+        .cyl-container {
+            transform: rotate(90deg);
+        }
+
+        .top-sentence {
+            position: fixed;
+            top: 10%; /* Adjust the top position as needed */
+            left: 35%;
+            transform: translateX(-50%) rotate(-90deg);
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /*.cylinder-container {
             position: relative;
-            width: 50%; /* Increased the width */
+            width: 50%; 
             height: 40vh;
             margin: 0 auto;
-            overflow: hidden;
             perspective: 800px;
         }
 
         .cylinder {
             position: absolute;
-            width: 100%; /* Keep it to 100% of the container's width */
+            width: 100%; 
             height: 100%;
             transform-style: preserve-3d;
             transform: rotateX(0deg);
-            transition: transform 1s;
+            transition: transform 1s ease;
+        }*/
+
+        .cylinder-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the cylinder container */
+            width: 70%; /* Ensures it takes the full width */
+            height: 70%; /* Takes full height of the container */
         }
 
-
-        /*.sentence {
+        .cylinder {
             position: absolute;
-            width: 100%;
-            text-align: center;
-            font-size: 16px;
-            color: white;
-            line-height: 40px;
-            font-weight: bold;
-            transform-origin: center center;
-            background-color: rgba(0, 128, 128, 0.6);
-            border-radius: 30px;
-        }*/
+            width: 100%; /* Full width of the container */
+            height: 100%; /* Full height of the container */
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 1s ease;
+            display: flex;
+            align-items: center; /* Vertically center sentences */
+            justify-content: center; /* Horizontally center sentences */
+        }
 
         .sentence {
             position: absolute;
-            width: 90%; /* Reduced width for better readability */
+            width: 80%;
             text-align: center;
-            font-size: 16px; /* Increased font size */
-            color: white; /* Ensuring good contrast */
-            line-height: 1.5; /* Improved spacing */
+            font-size: 18px;
+            color: white;
+            line-height: 1.8;
             font-weight: bold;
+            font-family: ui-sans-serif;
             transform-origin: center center;
-            background-color: rgba(0, 128, 128, 0.8); /* Darker shade for better contrast */
-            border-radius: 20px;
-            padding: 15px; /* Added padding for better spacing */
-            box-shadow: 11px -15px 8px rgb(0 0 0 / 31%); /* Soft shadow for depth */
-/*            -14px -18px 8px rgba(0, 0, 0, 0.2)*/
-/*             11px -15px 8px rgb(0 0 0 / 31%)*/
-/*              0px 4px 8px rgba(0, 0, 0, 0.2)*/
+            padding: 10px;
+            box-shadow: 11px -15px 8px rgb(0 0 0 / 31%);
+            transition: background 1s ease, transform 0.5s ease, box-shadow 0.5s ease;
+            border-radius: 25px;
+            background-color: rgba(0, 128, 128, 0.8);
         }
 
-        /* Random colors for sentences */
-        .sentence:nth-child(1) { 
-            background-color: rgba(0, 128, 128, 0.6); 
-            transform: rotateX(0deg) translateZ(140px); 
+        /* Random gradients for sentences */
+        .sentence:nth-child(1) {
+            background: linear-gradient(45deg, rgba(0, 128, 128, 0.8), rgba(255, 69, 0, 0.6));
+            transform: rotateY(0deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(2) { 
-            background-color: rgba(255, 69, 0, 0.6); 
-            transform: rotateX(24deg) translateZ(140px); 
+        .sentence:nth-child(2) {
+            background: linear-gradient(45deg, rgba(255, 69, 0, 0.6), rgba(255, 215, 0, 0.6));
+            transform: rotateY(24deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(3) { 
-            background-color: rgba(255, 215, 0, 0.6); 
-            transform: rotateX(48deg) translateZ(140px); 
+        .sentence:nth-child(3) {
+            background-color: rgba(245, 66, 132, 0.6);
+            transform: rotateY(48deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(4) { 
-            background-color: rgba(0, 255, 0, 0.6); 
-            transform: rotateX(72deg) translateZ(140px); 
+        .sentence:nth-child(4) {
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.8), rgba(0, 0, 255, 1));
+            transform: rotateY(72deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(5) { 
-            background-color: rgba(0, 0, 255, 0.6); 
-            transform: rotateX(96deg) translateZ(140px); 
+        .sentence:nth-child(5) {
+            background: linear-gradient(45deg, rgba(0, 0, 255, 0.6), rgba(255, 20, 147, 0.6));
+            transform: rotateY(96deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(6) { 
-            background-color: rgba(255, 20, 147, 0.6); 
-            transform: rotateX(120deg) translateZ(140px); 
+        .sentence:nth-child(6) {
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.6), rgba(255, 105, 180, 0.6));
+            transform: rotateY(120deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(7) { 
-            background-color: rgba(255, 105, 180, 0.6); 
-            transform: rotateX(144deg) translateZ(140px); 
+        .sentence:nth-child(7) {
+            background-color: rgba(66, 117, 245, 0.6);
+            transform: rotateY(144deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(8) { 
-            background-color: rgba(127, 255, 0, 0.6); 
-            transform: rotateX(168deg) translateZ(140px); 
+        .sentence:nth-child(8) {
+            background-color: rgba(245, 66, 93, 0.6);
+            transform: rotateY(168deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(9) { 
-            background-color: rgba(255, 99, 71, 0.6); 
-            transform: rotateX(192deg) translateZ(140px); 
+        .sentence:nth-child(9) {
+            background-color: rgba(66, 93, 245, 0.6);
+            transform: rotateY(192deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(10) { 
-            background-color: rgba(106, 90, 205, 0.6); 
-            transform: rotateX(216deg) translateZ(140px); 
+        .sentence:nth-child(10) {
+            background: linear-gradient(45deg, rgba(106, 90, 205, 0.8), rgba(255, 99, 132, 1));
+            transform: rotateY(216deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(11) { 
-            background-color: rgba(255, 99, 132, 0.6); 
-            transform: rotateX(240deg) translateZ(140px); 
+        .sentence:nth-child(11) {
+            background: linear-gradient(45deg, rgba(255, 99, 132, 0.8), rgba(54, 162, 235, 1));
+            transform: rotateY(240deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(12) { 
+        .sentence:nth-child(12) {
+            background: linear-gradient(45deg, rgba(54, 162, 235, 0.6), rgba(255, 159, 64, 0.6));
+            transform: rotateY(264deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(13) {
+            background: linear-gradient(45deg, rgba(255, 159, 64, 0.8), rgba(75, 192, 192, 0.8));
+            transform: rotateY(288deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
+        }
+        .sentence:nth-child(14) {
             background-color: rgba(54, 162, 235, 0.6); 
-            transform: rotateX(264deg) translateZ(140px); 
+            transform: rotateY(312deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(13) { 
-            background-color: rgba(255, 159, 64, 0.6); 
-            transform: rotateX(288deg) translateZ(140px); 
+        .sentence:nth-child(15) {
+            background: linear-gradient(45deg, rgba(153, 102, 255, 0.6), rgba(0, 128, 128, 0.6));
+            transform: rotateY(336deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px);
         }
-        .sentence:nth-child(14) { 
-            background-color: rgba(75, 192, 192, 0.6); 
-            transform: rotateX(312deg) translateZ(140px); 
-        }
-        .sentence:nth-child(15) { 
-            background-color: rgba(153, 102, 255, 0.6); 
-            transform: rotateX(336deg) translateZ(140px); 
-        }
+
 
 
         .arrows {
@@ -195,11 +227,13 @@
         }
 
 
+
     </style>
 </head>
 <body>
+
     <div class="container" id="slide0">
-        <h2>Enter your name</h2>
+        <h1>Enter your name</h2>
         <input type="text" id="username" placeholder="Your Name">
         <div class="buttons">
             <button class="button-28" id="login">Login</button>
@@ -236,17 +270,28 @@
         </div>
     </div>
 
-        <div class="container" id="slide4">
-            <img src="resources/panda.gif" alt="GIF 4" class="gif">
+    <div class="container" id="slide4">
+        <img src="resources/peach-goma-phone.gif" alt="GIF 3" class="gif">
+        <p class="text large-text">Phir se soch lo 🙃 </p>
+        <p class="text">Will you be my Valentine? 💌</p>
+        <div class="buttons">
+            <button class="button-28">Yes</button>
+            <button class="button-28 no" id="toSlide5">No</button>
+        </div>
+    </div>
+
+        <div class="container" id="slide5">
+            <img src="resources/panda.gif" alt="GIF 5" class="gif">
             <p class="text large-text">Maan bhi jaao ab!! Kitna Bhav khaogi</p>
-            <p class="text">Say yes!! Will you be my Valentine?🥺</p>
+            <p class="text">Will you be my Valentine?🥺</p>
+            <p class="text">Say yes!!</p>
             <div class="buttons">
-                <button class="button-28 yes" id="toSlide5">Yes</button>
+                <button class="button-28 yes" id="toslide6">Yes</button>
                 <button class="button-28 no" id="movingNo">No</button>
             </div>
         </div>
 
-    <div class="container" id="slide5">
+    <div class="container cyl-container" id="slide6">
         <div class="cylinder-container">
             <div class="cylinder">
                 <div class="sentence">You are all that I want this Life 😊</div>
@@ -267,6 +312,7 @@
             </div>
         </div>
 
+        <p class="top-sentence">Love ❤️ 💞</p>
     </div>
 
     <div class="arrows">
@@ -283,18 +329,34 @@
 
     <script>
         $(document).ready(function() {
-            $(".arrows").hide()
+            $(".arrows").hide();
+
+            const sentenceColors = [
+                "rgba(66, 197, 245, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(66, 111, 245, 0.8)",
+                "rgba(66, 66, 245, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(245, 66, 194, 0.8)",
+                "rgba(245, 66, 150, 0.8)",
+                "rgba(245, 66, 120, 0.8)",
+                "rgba(156, 66, 245, 0.8)",
+                "rgba(188, 66, 245, 0.8)",
+                "rgba(245, 93, 66, 0.8)",
+                "rgba(245, 111, 66, 0.8)",
+                "rgba(66, 164, 245, 0.8)",
+                "rgba(66, 108, 245, 0.6)", 
+                "rgba(170, 66, 245, 0.8)"
+            ];
 
             $("#login").click(function() {
                 var username = $("#username").val().trim();
-                if (username.toLowerCase() === "vanshika") { // Check if the username is "anikit"
+                if (username.toLowerCase() === "vanshika") { // Check if the username is "vanshika"
                     $("#slide0").hide();
                     $("#slide1").show();
                 } else {
-                    alert("Access denied"); // Show a message if the name doesn't match
+                    alert("Access denied");
                 }
-                // $("#slide0").hide();
-                // $("#slide1").show();
             });
 
             $("#toSlide2").click(function() {
@@ -315,11 +377,16 @@
             $("#toSlide5").click(function() {
                 $("#slide4").hide();
                 $("#slide5").show();
-                $(".arrows").show()
+            });
+
+            $("#toslide6").click(function() {
+                $("#slide5").hide();
+                $("#slide6").show();
+                $(".arrows").show();
             });
 
             $("#movingNo").mouseenter(function() {
-                let maxX = 40; 
+                let maxX = 40;
                 let maxY = 30;
                 let windowWidth = window.innerWidth;
                 let windowHeight = window.innerHeight;
@@ -333,8 +400,8 @@
             });
 
             $("#movingNo").click(function() {
-                let maxX = 40; 
-                let maxY = 30; 
+                let maxX = 40;
+                let maxY = 30;
                 let windowWidth = window.innerWidth;
                 let windowHeight = window.innerHeight;
 
@@ -348,27 +415,19 @@
 
             $(".yes").click(function() {
                 $(this).closest(".container").hide().next().show();
-            }); 
-
+            });
 
             var angle = 0;
             $("#arrowBtn").click(function() {
-                angle += 24; // Update the angle increment to 24 degrees
+                angle -= 30; // Update the angle increment to 30 degrees
                 updateCylinder();
             });
 
             function updateCylinder() {
-                $(".cylinder").css("transform", "rotateX(" + angle + "deg)");
+                $(".cylinder").css("transform", "rotateY(" + angle + "deg)");
 
-                const sentenceIndex = (angle / 24) % 15; // Update to support 15 sentences
-                const sentenceColors = [
-                    "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 159, 64)", 
-                    "rgb(75, 192, 192)", "rgb(153, 102, 255)", "rgb(255, 159, 64)", 
-                    "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", 
-                    "rgb(153, 102, 255)", "rgb(255, 99, 132)", "rgb(54, 162, 235)",
-                    "rgb(255, 159, 64)", "rgb(75, 192, 192)", "rgb(153, 102, 255)"
-                ];
-
+                const sentenceIndex = Math.abs(Math.floor((angle / 24) % 15)); // Calculate the current sentence index
+                // Update the background color dynamically based on the current sentence color
                 $("body").css("background-color", sentenceColors[sentenceIndex]);
             }
         });

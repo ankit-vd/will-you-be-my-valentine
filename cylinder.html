@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cylinder Rotation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+            transform: rotate(90deg);
+        }
+
+        .cylinder {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 1s ease;
+        }
+
+        .sentence {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            background-color: rgba(0, 128, 128, 0.6);
+            line-height: 30px;
+            transform-origin: center center;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Sentences arranged in a circular shape */
+        .sentence:nth-child(1) { transform: rotateY(0deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(2) { transform: rotateY(24deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(3) { transform: rotateY(48deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(4) { transform: rotateY(72deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(5) { transform: rotateY(96deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(6) { transform: rotateY(120deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(7) { transform: rotateY(144deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(8) { transform: rotateY(168deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(9) { transform: rotateY(192deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(10) { transform: rotateY(216deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(11) { transform: rotateY(240deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(12) { transform: rotateY(264deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(13) { transform: rotateY(288deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(14) { transform: rotateY(312deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+        .sentence:nth-child(15) { transform: rotateY(336deg) rotateZ(-90deg) rotateX(0deg) translateZ(140px); }
+
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: rgba(255, 69, 0, 0.8);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="cylinder" id="cylinder">
+            <!-- Sentences placed here -->
+            <div class="sentence">Sentence 1</div>
+            <div class="sentence">Sentence 2</div>
+            <div class="sentence">Sentence 3</div>
+            <div class="sentence">Sentence 4</div>
+            <div class="sentence">Sentence 5</div>
+            <div class="sentence">Sentence 6</div>
+            <div class="sentence">Sentence 7</div>
+            <div class="sentence">Sentence 8</div>
+            <div class="sentence">Sentence 9</div>
+            <div class="sentence">Sentence 10</div>
+            <div class="sentence">Sentence 11</div>
+            <div class="sentence">Sentence 12</div>
+            <div class="sentence">Sentence 13</div>
+            <div class="sentence">Sentence 14</div>
+            <div class="sentence">Sentence 15</div>
+        </div>
+        <button class="arrow-btn" id="rotateBtn">&#8593;</button>
+    </div>
+
+    <script>
+        let angle = 0;
+        const cylinder = document.getElementById("cylinder");
+
+        document.getElementById("rotateBtn").addEventListener("click", function() {
+            angle += 24; // Rotate by 24 degrees on each click
+            updateCylinder();
+        });
+
+        function updateCylinder() {
+            cylinder.style.transform = `rotateY(${angle}deg)`; // Rotate around Y-axis to create the effect
+        }
+    </script>
+
+</body>
+</html>
